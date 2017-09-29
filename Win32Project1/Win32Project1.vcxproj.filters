@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="FrameWork">
+      <UniqueIdentifier>{3a64f61b-450a-4a0e-acae-0ff0364e0074}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\GLOBAL">
+      <UniqueIdentifier>{e302589b-2eb8-4a4f-b517-e16119742094}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\GAME">
+      <UniqueIdentifier>{1f3aa308-0f88-4e6a-a8b1-cca37f8d8cee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\SPRITE">
+      <UniqueIdentifier>{0941143f-df90-434b-9000-9c9f4cd7804d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\ALADDIN">
+      <UniqueIdentifier>{51e7c73f-d2b3-4d16-a500-56a818c18f9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\Surface">
+      <UniqueIdentifier>{143d9012-854f-47dc-83cb-141ff01bb36d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GLOBAL.cpp">
+      <Filter>FrameWork\GLOBAL</Filter>
+    </ClCompile>
+    <ClCompile Include="GAME.cpp">
+      <Filter>FrameWork\GAME</Filter>
+    </ClCompile>
+    <ClCompile Include="SPRITE.cpp">
+      <Filter>FrameWork\SPRITE</Filter>
+    </ClCompile>
+    <ClCompile Include="ALADDIN.cpp">
+      <Filter>FrameWork\ALADDIN</Filter>
+    </ClCompile>
+    <ClCompile Include="AladdinAction.cpp">
+      <Filter>FrameWork\ALADDIN</Filter>
+    </ClCompile>
+    <ClCompile Include="AladdinWalk.cpp">
+      <Filter>FrameWork\ALADDIN</Filter>
+    </ClCompile>
+    <ClCompile Include="AladdinSwing.cpp">
+      <Filter>FrameWork\ALADDIN</Filter>
+    </ClCompile>
+    <ClCompile Include="AladdinClimb.cpp">
+      <Filter>FrameWork\ALADDIN</Filter>
+    </ClCompile>
+    <ClCompile Include="AladdinDrop.cpp">
+      <Filter>FrameWork\ALADDIN</Filter>
+    </ClCompile>
+    <ClCompile Include="SurfaceManager.cpp">
+      <Filter>FrameWork\Surface</Filter>
+    </ClCompile>
+    <ClCompile Include="dxinput.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AladdinStand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AladdinSit.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AladdinFight.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AladdinJump.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GLOBAL.h">
+      <Filter>FrameWork\GLOBAL</Filter>
+    </ClInclude>
+    <ClInclude Include="GAME.h">
+      <Filter>FrameWork\GAME</Filter>
+    </ClInclude>
+    <ClInclude Include="SPRITE.h">
+      <Filter>FrameWork\SPRITE</Filter>
+    </ClInclude>
+    <ClInclude Include="ALADDIN.h">
+      <Filter>FrameWork\ALADDIN</Filter>
+    </ClInclude>
+    <ClInclude Include="AladdinAction.h">
+      <Filter>FrameWork\ALADDIN</Filter>
+    </ClInclude>
+    <ClInclude Include="AladdinWalk.h">
+      <Filter>FrameWork\ALADDIN</Filter>
+    </ClInclude>
+    <ClInclude Include="AladdinSwing.h">
+      <Filter>FrameWork\ALADDIN</Filter>
+    </ClInclude>
+    <ClInclude Include="AladdinClimb.h">
+      <Filter>FrameWork\ALADDIN</Filter>
+    </ClInclude>
+    <ClInclude Include="AladdinDrop.h">
+      <Filter>FrameWork\ALADDIN</Filter>
+    </ClInclude>
+    <ClInclude Include="SurfaceManager.h">
+      <Filter>FrameWork\Surface</Filter>
+    </ClInclude>
+    <ClInclude Include="dxinput.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AladdinStand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AladdinSit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AladdinFight.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AladdinJump.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Win32Project1.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>
