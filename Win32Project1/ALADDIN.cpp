@@ -12,6 +12,8 @@ ALADDIN::ALADDIN(D3DXVECTOR3 startLocation)
 	this->mAction[GLOBAL::SIT] = new AladdinSit(startLocation);
 	this->mAction[GLOBAL::FIGHT] = new AladdinFight(startLocation);
 	this->mAction[GLOBAL::JUMP] = new AladdinJump(startLocation);
+	this->mAction[GLOBAL::SITFIGHT] = new AladdinSitFight(startLocation);
+	this->mAction[GLOBAL::AFTERDROP] = new AladdinAfterDrop(startLocation);
 	this->mCurrentLocation = startLocation;
 }
 

@@ -12,6 +12,8 @@
 #include "AladdinSit.h"
 #include "AladdinFight.h"
 #include "AladdinJump.h"
+#include "AladdinSitFight.h"
+#include "AladdinAfterDrop.h"
 using namespace std;
 
 class ALADDIN
@@ -34,7 +36,7 @@ public:
 	D3DXVECTOR3			GetEndLocation();
 	void				SetSpeed(float speed, GLOBAL::STATE state = GLOBAL::DROP);
 protected:
-	AladdinAction*		mAction[8];
+	AladdinAction*		mAction[10];
 	D3DXVECTOR3			mCurrentLocation;
 };
 

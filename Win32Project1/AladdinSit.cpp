@@ -20,28 +20,17 @@ AladdinSit::AladdinSit(D3DXVECTOR3 startLocation)
 	this->LoadResource();
 
 }
-bool flag = false;
 void AladdinSit::Activities(GLOBAL::DIRECTION direction)
 {
 	
-	GLOBAL::SetFrameRate(35);
-	if (direction == GLOBAL::LEFT)
-	{
-		if (flag)
-		{
-			this->mSprite->FlipVertical(true);
-			flag = false;
-		}
-	}
 
-	else if (direction == GLOBAL::RIGHT)
-	{
-		if (!flag)
-		{
-			this->mSprite->FlipVertical(false);
-			flag = true;
-		}
-	}
+	GLOBAL::SetFrameRate(30);
+
+
+	if (direction == GLOBAL::LEFT)
+		this->mSprite->FlipVertical(true);
+	else
+		this->mSprite->FlipVertical(false);
 	AladdinAction::Activities(direction);
 }
 

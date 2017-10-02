@@ -12,38 +12,97 @@ AladdinAction::~AladdinAction()
 	if (this->mSprite)
 		delete(this->mSprite);
 }
-int frame = 1;
-
+int frameSit = 1;
+int frameDrop = 1;
+int frameAfterDrop = 1;
+void UpdateFrame()
+{
+	frameSit = 1;
+	frameDrop = 1;
+	frameAfterDrop = 1;
+}
 void AladdinAction::Activities(GLOBAL::DIRECTION direction)
 {
 	int i = this->GetCurrentFrame();
-	
-	if (GLOBAL::GetState()==GLOBAL::STAND)
+	GLOBAL::STATE state = GLOBAL::GetState();
+
+	switch (state)
 	{
-		this->mSprite->SetPosition(mCurrentLocation.x, mCurrentLocation.y-20);
-		this->mSprite->Draw(i - 1, D3DXVECTOR2(this->mSprite->GetScale().x * 2.3, this->mSprite->GetScale().y * 2.3));
-		frame = 1;
-	}
-	else
-	if (GLOBAL::GetState() == GLOBAL::SIT)
-	{
+	case GLOBAL::CLIMB:
 		this->mSprite->SetPosition(mCurrentLocation.x, mCurrentLocation.y);
-		if (frame++ < 4)
+		if(direction==GLOBAL::UP)
+			this->mSprite->Draw(i - 1, D3DXVECTOR2(this->mSprite->GetScale().x * 2, this->mSprite->GetScale().y * 2));
+		if (direction == GLOBAL::DOWN)
+			this->mSprite->Draw(10-i, D3DXVECTOR2(this->mSprite->GetScale().x * 2, this->mSprite->GetScale().y * 2));
+		if (direction == GLOBAL::NONE)
+			this->mSprite->Draw(6, D3DXVECTOR2(this->mSprite->GetScale().x * 2, this->mSprite->GetScale().y * 2));
+		UpdateFrame();
+		break;
+	case GLOBAL::STAND:
+		this->mSprite->SetPosition(mCurrentLocation.x, mCurrentLocation.y - 20);
+		this->mSprite->Draw(i - 1, D3DXVECTOR2(this->mSprite->GetScale().x * 2.3, this->mSprite->GetScale().y * 2.3));
+		UpdateFrame();
+		break;
+	case GLOBAL::SIT:
+		this->mSprite->SetPosition(mCurrentLocation.x, mCurrentLocation.y);
+		if (frameSit++ <= 3)
 		{
-		
+
 			this->mSprite->Draw(i - 1, D3DXVECTOR2(this->mSprite->GetScale().x * 2, this->mSprite->GetScale().y * 2));
 		}
 		else
 		{
 			this->mSprite->Draw(3, D3DXVECTOR2(this->mSprite->GetScale().x * 2, this->mSprite->GetScale().y * 2));
 		}
-	}
-	else 
-	{
-		frame = 1;
+		break;
+	case GLOBAL::FIGHT:
+		this->mSprite->SetPosition(mCurrentLocation.x, mCurrentLocation.y - 10);
+		this->mSprite->Draw(i - 1, D3DXVECTOR2(this->mSprite->GetScale().x * 2.1, this->mSprite->GetScale().y * 2.1));
+		UpdateFrame();
+		break;
+	case GLOBAL::SITFIGHT:
+		if (mCurrentFrame == 4)
+			this->mSprite->SetPosition(mCurrentLocation.x + 20, mCurrentLocation.y + 10);
+		else
+			this->mSprite->SetPosition(mCurrentLocation.x, mCurrentLocation.y + 10);
+		this->mSprite->Draw(i - 1, D3DXVECTOR2(this->mSprite->GetScale().x * 2.1, this->mSprite->GetScale().y * 2.1));
+		UpdateFrame();
+		break;
+	case GLOBAL::AFTERDROP:
+		this->mSprite->SetPosition(mCurrentLocation.x, mCurrentLocation.y + 5);
+		if(frameAfterDrop++<=11)
+			this->mSprite->Draw(frameAfterDrop-1, D3DXVECTOR2(this->mSprite->GetScale().x * 2.2, this->mSprite->GetScale().y * 2.2));
+		break;
+	case GLOBAL::DROP:
+		this->mSprite->SetPosition(mCurrentLocation.x, mCurrentLocation.y);
+		if (mCurrentLocation.y < AladdinAction::mEndLocation.y)
+		{
+			if (frameDrop++ <=8)
+			{
+				GLOBAL::SetFrameRate(15);
+				this->mSprite->Draw(frameDrop-1, D3DXVECTOR2(this->mSprite->GetScale().x * 2, this->mSprite->GetScale().y * 2));
+			}
+			else
+			{
+				this->mSpeed = 40;
+				GLOBAL::SetFrameRate(15);
+				this->mSprite->Draw(9 - 1, D3DXVECTOR2(this->mSprite->GetScale().x * 2, this->mSprite->GetScale().y * 2));
+				this->mCurrentFrame = 1;
+			}
+		
+			
+		}
+		break;
+
+	
+
+	default:
+		UpdateFrame();
 		this->mSprite->SetPosition(mCurrentLocation.x, mCurrentLocation.y);
 		this->mSprite->Draw(i - 1, D3DXVECTOR2(this->mSprite->GetScale().x * 2, this->mSprite->GetScale().y * 2));
+		break;
 	}
+	
 	this->SetUpCurrentFrame();
 	this->Update(direction);
 }
@@ -81,4 +140,5 @@ int AladdinAction::GetCurrentFrame()
 void AladdinAction::SetUpCurrentFrame()
 {
 	mCurrentFrame = (mCurrentFrame >= this->mEndFrame) ? this->mStartFrame : ++mCurrentFrame;
+
 }

@@ -36,21 +36,9 @@ void AladdinJump::Activities(GLOBAL::DIRECTION direction)
 
 
 	if (direction == GLOBAL::LEFT)
-	{
-		if (directJump)
-		{
 			this->mSprite->FlipVertical(true);
-			directJump = false;
-		}
-	}
-	else if (direction == GLOBAL::RIGHT)
-	{
-		if (!directJump)
-		{
+	else 
 			this->mSprite->FlipVertical(false);
-			directJump = true;
-		}
-	}
 	AladdinAction::Activities(direction);
 }
 

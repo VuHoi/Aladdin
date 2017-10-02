@@ -17,7 +17,6 @@ AladdinWalk::~AladdinWalk()
 }
 
 
-bool					direct = false;
  //Check current direction
 void AladdinWalk::Activities(GLOBAL::DIRECTION direction)
 {
@@ -26,21 +25,9 @@ void AladdinWalk::Activities(GLOBAL::DIRECTION direction)
 
 
 	if (direction == GLOBAL::LEFT)
-	{
-		if (direct)
-		{
-			this->mSprite->FlipVertical(true);
-			direct = false;
-		}
-	}
-	else if(direction==GLOBAL::RIGHT)
-	{
-		if (!direct)
-		{
-			this->mSprite->FlipVertical(false);
-			direct = true;
-		}
-	}
+		this->mSprite->FlipVertical(true);
+	else
+		this->mSprite->FlipVertical(false);
 	AladdinAction::Activities(direction);
 }
 

@@ -23,22 +23,12 @@ void AladdinStand::Activities(GLOBAL::DIRECTION direction)
 {
 	
 	GLOBAL::SetFrameRate(35);
+
+
 	if (direction == GLOBAL::LEFT)
-	{
-		if (directStand)
-		{
-			this->mSprite->FlipVertical(true);
-			directStand = false;
-		}
-	}
-	else if (direction == GLOBAL::RIGHT)
-	{
-		if (!directStand)
-		{
-			this->mSprite->FlipVertical(false);
-			directStand = true;
-		}
-	}
+		this->mSprite->FlipVertical(true);
+	else
+		this->mSprite->FlipVertical(false);
 	AladdinAction::Activities(direction);
 
 }

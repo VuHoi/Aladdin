@@ -26,24 +26,11 @@ AladdinFight::AladdinFight(D3DXVECTOR3 startLocation)
 
 void AladdinFight::Activities(GLOBAL::DIRECTION direction)
 {
-	bool					directFight = GLOBAL::GetCurDirect();
-	GLOBAL::SetFrameRate(20);
+	GLOBAL::SetFrameRate(25);
 	if (direction == GLOBAL::LEFT)
-	{
-		if (directFight)
-		{
-			this->mSprite->FlipVertical(true);
-			directFight = false;
-		}
-	}
-	else if (direction == GLOBAL::RIGHT)
-	{
-		if (!directFight)
-		{
-			this->mSprite->FlipVertical(false);
-			directFight = true;
-		}
-	}
+		this->mSprite->FlipVertical(true);
+	else
+		this->mSprite->FlipVertical(false);
 	AladdinAction::Activities(direction);
 }
 

@@ -46,7 +46,7 @@ void GAME::Initialize()
 }
 
 D3DVECTOR oldPos = D3DVECTOR();
-bool curDirect = true; //=GLOBAL::GetCurDirect(); //true is right,false is left
+GLOBAL::DIRECTION curDirect = GLOBAL::RIGHT; //=GLOBAL::GetCurDirect(); //true is right,false is left
 int curTime = 0;//GetTickCount();
 bool stand = true; // Kiem soat trang thai dung im
 void UpdateCurPos(D3DVECTOR &a, D3DVECTOR b)
@@ -72,72 +72,138 @@ void GAME::Run()
 
 		this->mMap->Render(NULL, NULL);
 	
-		if (Key_down(DIK_RIGHT) && this->mState!=GLOBAL::JUMP)
+		if (Key_down(DIK_RIGHT) && this->mState!=GLOBAL::JUMP && this->mState != GLOBAL::DROP)
 		{
-			
-			curDirect = true; //Dang quay ve ben phai
-			GLOBAL::SetCurDirect(true); //Dang quay ve ben phai
-
-			this->mState = GLOBAL::WALK;  //Set state hien tai cho Aladdin
-			GLOBAL::SetState(mState); //Set state hien tai cho global
-
+			curDirect = GLOBAL::RIGHT; //Dang quay ve ben phai
+			if (mState == GLOBAL::CLIMB)
+				mState = GLOBAL::DROP;
+			else this->mState = GLOBAL::WALK;  //Set state hien tai cho Aladdin
 			UpdateCurPos(oldPos, mAladdin->GetCurrentLocation());//Update vi tri cu de so sanh
-
 			stand = false; //Khong dung im
+			
 
-			
-			
 		}
 		else
-		if (Key_down(DIK_UP))
+		if (Key_down(DIK_UP) && this->mState != GLOBAL::JUMP)
 		{
-			this->mState = GLOBAL::JUMP;
-			GLOBAL::SetState(mState);
-			UpdateCurPos(oldPos, mAladdin->GetCurrentLocation());//Update vi tri cu de so sanh
+			if (mAladdin->GetCurrentLocation().x >= 920 && mAladdin->GetCurrentLocation().x <= 960)
+			{
+				this->mState = GLOBAL::CLIMB;
+				curDirect = GLOBAL::UP;
+			}
+			else
+			{
 
+				this->mState = GLOBAL::JUMP;
+				//Update vi tri cu de so sanh
+		
+			}
+			UpdateCurPos(oldPos, mAladdin->GetCurrentLocation());
 			stand = false;
 		}
 		else
-		if (Key_down(DIK_LEFT) && this->mState != GLOBAL::JUMP)
+		if (Key_down(DIK_LEFT) && this->mState != GLOBAL::JUMP && this->mState != GLOBAL::DROP)
 		{
-			curDirect = false;
-			GLOBAL::SetCurDirect(false);
-			this->mState = GLOBAL::WALK;
-			GLOBAL::SetState(mState);
-
+			curDirect = GLOBAL::LEFT;
+			if (mState == GLOBAL::CLIMB)
+			{
+				mState = GLOBAL::DROP;
+				
+			}
+			else this->mState = GLOBAL::WALK;
 			UpdateCurPos(oldPos, mAladdin->GetCurrentLocation());//Update vi tri cu de so sanh
 			stand = false;
 		
 		}
-		else if (Key_down(DIK_DOWN))
+		else
+		if (Key_down(DIK_DOWN) && this->mState != GLOBAL::JUMP && this->mState != GLOBAL::SITFIGHT)
 		{
-			this->mState = GLOBAL::SIT;
-			GLOBAL::SetState(mState);
+			if (mAladdin->GetCurrentLocation().x >= 920 && mAladdin->GetCurrentLocation().x <= 960)
+			{
+				this->mState = GLOBAL::CLIMB;
+				curDirect = GLOBAL::DOWN;
+			}
+			else
+			{
+				this->mState = GLOBAL::SIT;
+			
+			}
 			stand = false;
 
-		
-		
 		}
-		else if (Key_down(DIK_SPACE))
+		if (Key_down(DIK_SPACE ) && this->mState != GLOBAL::JUMP)
 		{
 			curTime = GetTickCount();
-			this->mState = GLOBAL::FIGHT;
-			GLOBAL::SetState(mState);
+			if (mState == GLOBAL::SIT || mState == GLOBAL::SITFIGHT)
+				this->mState = GLOBAL::SITFIGHT;
+			else
+				this->mState = GLOBAL::FIGHT;
 			stand = false;
 		}
+	
+		else 
+
 		if(stand)
 		{
 			this->mState = GLOBAL::STAND;
-			GLOBAL::SetState(mState);
+			
 		}
 
+		GLOBAL::SetState(mState);
+
 		int temp = GetTickCount();
+
 		switch (this->mState)
 		{
-		case GLOBAL::JUMP:
-			if (curDirect) //Check direct to draw
+		case GLOBAL::AFTERDROP:
+			if (temp - curTime >900)
+			this->mState = GLOBAL::STAND;
+			this->mAladdin->Activities(mState, curDirect);
+			break;
+		case GLOBAL::DROP:
+			this->mAladdin->SetEndLocation(D3DXVECTOR3(this->mLastLocation.x, 480, 0));
+			if (this->mAladdin->GetCurrentLocation().y >= this->mAladdin->GetEndLocation().y)
 			{
-				this->mAladdin->Activities(mState, GLOBAL::RIGHT);
+				curTime = GetTickCount();
+				this->mState = GLOBAL::AFTERDROP;
+
+			}
+			else
+			{
+				this->mAladdin->Activities(mState, curDirect);
+			}
+		
+			
+			break;
+		case GLOBAL::CLIMB:
+			if (curDirect == GLOBAL::UP)
+			{
+				this->mAladdin->Activities(mState, curDirect);
+				if (oldPos.y - mAladdin->GetCurrentLocation().y >10)
+				{
+					curDirect = GLOBAL::NONE;
+				}
+			}
+			else if (curDirect == GLOBAL::DOWN)
+			{
+				this->mAladdin->Activities(mState, curDirect);
+				if (mAladdin->GetCurrentLocation().y-oldPos.y  >10)
+				{
+					curDirect = GLOBAL::NONE;
+				}
+			}
+			else this->mAladdin->Activities(mState, curDirect);
+			break;
+		case GLOBAL::SITFIGHT:
+		case GLOBAL::SIT:
+		case GLOBAL::STAND:
+			this->mAladdin->Activities(mState, curDirect);
+			break;
+		
+		case GLOBAL::JUMP:
+			if (curDirect == GLOBAL::RIGHT) //Check direct to draw
+			{
+				this->mAladdin->Activities(mState, curDirect);
 
 				if (mAladdin->GetCurrentLocation().x - oldPos.x >179)
 				{
@@ -145,9 +211,9 @@ void GAME::Run()
 					stand = true;
 				}
 			}
-			else
+			else if (curDirect == GLOBAL::LEFT)
 			{
-				this->mAladdin->Activities(mState, GLOBAL::LEFT);
+				this->mAladdin->Activities(mState, curDirect);
 
 				if (-mAladdin->GetCurrentLocation().x + oldPos.x >179)
 				{
@@ -155,21 +221,22 @@ void GAME::Run()
 					stand = true;
 				}
 			}
-
+			
 			break;
+
 		case GLOBAL::WALK:
-			if (curDirect)
+			if (curDirect == GLOBAL::RIGHT)
 			{
-				this->mAladdin->Activities(GLOBAL::WALK, GLOBAL::RIGHT);
+				this->mAladdin->Activities(mState, curDirect);
 				if (mAladdin->GetCurrentLocation().x - oldPos.x >50)
 				{
 					this->mState = GLOBAL::STAND;
 					stand = true;
 				}
 			}
-			else
+			else if(curDirect == GLOBAL::LEFT)
 			{
-				this->mAladdin->Activities(GLOBAL::WALK, GLOBAL::LEFT);
+				this->mAladdin->Activities(mState, curDirect);
 				if (oldPos.x-mAladdin->GetCurrentLocation().x   >50)
 				{
 					this->mState = GLOBAL::STAND;
@@ -178,76 +245,22 @@ void GAME::Run()
 			}
 			break;
 			
-
-
-		case GLOBAL::SIT:
-			if (curDirect) //Check direct to draw
-				this->mAladdin->Activities(mState, GLOBAL::RIGHT);
-			else this->mAladdin->Activities(mState, GLOBAL::LEFT);
-			break;
+	
 
 
 		case GLOBAL::FIGHT:
 			if (temp-curTime> 500)
 			this->mState = GLOBAL::STAND;
-			if (curDirect) //Check direct to draw
-				this->mAladdin->Activities(mState, GLOBAL::RIGHT);
-			else this->mAladdin->Activities(mState, GLOBAL::LEFT);
-			break;
-
-		
-			
-		
-		case GLOBAL::STAND:
-			if (curDirect) //Check direct to draw
-				this->mAladdin->Activities(mState, GLOBAL::RIGHT);
-			else this->mAladdin->Activities(mState, GLOBAL::LEFT);
+			this->mAladdin->Activities(mState, curDirect);
 			break;
 		}
-	/*	switch (this->mState)
-		{
-		case GLOBAL::SWING:
-		{
-			this->mAladdin->Activities(GLOBAL::SWING, GLOBAL::LEFT);
-			if (this->mAladdin->GetCurrentLocation().x <= 50)
-			{
-				this->mState = GLOBAL::DROP;
-				this->mAladdin->SetSpeed(10);
-			}
-			break;
-		}
-		case GLOBAL::DROP:
-		{
-			this->mAladdin->SetEndLocation(D3DXVECTOR3(this->mLastLocation.x, 500, 0));
-			this->mAladdin->Activities(GLOBAL::DROP, GLOBAL::RIGHT);
-			if (this->mAladdin->GetCurrentLocation().y >= this->mAladdin->GetEndLocation().y)
-			{ 
-				this->mState = GLOBAL::WALK;
-			}
-			break;
-		}
-		case GLOBAL::WALK:
-		{
-			this->mAladdin->Activities(GLOBAL::WALK, GLOBAL::RIGHT);
-			if (this->mAladdin->GetCurrentLocation().x >= 931)
-				this->mState = GLOBAL::CLIMB;
-			break;
-		}
-		case GLOBAL::CLIMB:
-		{
-			this->mAladdin->Activities(GLOBAL::CLIMB, GLOBAL::UP);
-			if(this->mAladdin->GetCurrentLocation().y<=100)
-				this->mState = GLOBAL::SWING;
-			break;
-		}
-		}*/
-
 
 		GLOBAL::GetSpriteHandler()->End();
 		GLOBAL::GetDirectDevice()->EndScene();
 	}
 	GLOBAL::GetDirectDevice()->Present(NULL, NULL, NULL, NULL);
 }
+
 LRESULT GAME::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg)

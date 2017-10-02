@@ -12,7 +12,6 @@ char*							GLOBAL::mGameName = "TEST GAME";
 int								GLOBAL::mFrameRate;
 int								GLOBAL::mCurrentFrame = 0;
 GLOBAL::STATE					GLOBAL::mCurrentState = STAND;
-bool							GLOBAL::mCurrDirect=false;
 GLOBAL::GLOBAL()
 {
 }

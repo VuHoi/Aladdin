@@ -17,7 +17,7 @@ AladdinClimb::~AladdinClimb()
 
 void AladdinClimb::Activities(GLOBAL::DIRECTION direction)
 {
-	GLOBAL::SetFrameRate(25);
+	GLOBAL::SetFrameRate(50);
 	AladdinAction::Activities(direction);
 }
 
