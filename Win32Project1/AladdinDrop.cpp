@@ -5,10 +5,10 @@
 
 AladdinDrop::AladdinDrop(D3DXVECTOR3 startLocation)
 {
-	this->mSpeed = 15;
+	this->mSpeed = 20;
 	mCurrentLocation = startLocation;
 	this->mStartFrame = 1;
-	this->mEndFrame = 18;
+	this->mEndFrame = 10;
 	this->mCurrentFrame = this->mStartFrame;
 	this->LoadResource();
 }
@@ -19,20 +19,16 @@ AladdinDrop::~AladdinDrop()
 
 void AladdinDrop::Activities(GLOBAL::DIRECTION direction)
 {
+
 	if (direction == GLOBAL::LEFT)
 		this->mSprite->FlipVertical(true);
-	this->mSpeed += 2.0f;
-	int i = this->GetCurrentFrame();
-	this->mSprite->SetPosition(mCurrentLocation.x, mCurrentLocation.y);
-	this->mSprite->Draw(i - 1, D3DXVECTOR2(this->mSprite->GetScale().x * 2, this->mSprite->GetScale().y * 2));
-	if (i < 7)
-	{
-		this->SetUpCurrentFrame();
-	}
-	else if (mCurrentLocation.y >= AladdinAction::mEndLocation.y)
-		this->SetUpCurrentFrame();
 	else
-		this->Update(direction);
+		this->mSprite->FlipVertical(false);
+
+	AladdinAction::Activities(direction);
+
+
+	
 }
 
 void AladdinDrop::SetEndLocation(D3DXVECTOR3 location)
@@ -42,46 +38,161 @@ void AladdinDrop::SetEndLocation(D3DXVECTOR3 location)
 
 void AladdinDrop::Update(GLOBAL::DIRECTION direction)
 {
+	if (direction == GLOBAL::LEFT)
+	{
+		mCurrentLocation.x -= 10;
+	}
+	if (direction == GLOBAL::RIGHT)
+	{
+		mCurrentLocation.x += 10;
+	}
 	mCurrentLocation.y += this->mSpeed;
 }
 
 void AladdinDrop::LoadResource()
 {
+
 	vector<RECT> listSourceRect;
 	char filePath[100];
 	sprintf_s(filePath, "AladdinAction/Aladdin.png");
-	int lastX = 0;
 	for (int i = 1; i <= COUNT_FRAME; i++)
 	{
 		RECT rect;
-		if (i <= 7)
+		switch (i)
 		{
-			rect.top = 805;
-			float x = 60;
-			rect.right = 200+x * i;
-			rect.left = 200 + x * i - x + 1;
-			rect.bottom = 905;
-		}
-		else
-		{
-			rect.top = 905;
-			float x;
-			switch (i)
-			{
-			case 8:case 9: case 10: case 11: case 12: x = 72.5; break;
-			case 13:case 14: x = 86; break; 
-			case 15: case 16: case 17: x = 104; break;
-			default: x = 115;
-			}
-			rect.left = lastX;
-			rect.right = lastX + x;
-			rect.bottom = 985;
-			lastX = rect.right;
+
+		case 1:
+			rect.left = 72;
+			rect.top = 826;
+			rect.right = rect.left + 56;
+			rect.bottom = rect.top + 64;
+
+			break;
+		case 2:
+			rect.left =135;
+			rect.top = 827;
+			rect.right = rect.left + 56;
+			rect.bottom = rect.top + 64;
+
+			break;
+		case 3:
+			rect.left = 201;
+			rect.top = 822;
+			rect.right = rect.left + 57;
+			rect.bottom = rect.top + 71;
+
+			break;
+		case 4:
+			rect.left = 267;
+			rect.top = 820;
+			rect.right = rect.left + 53;
+			rect.bottom = rect.top + 74;
+
+			break;
+		case 5:
+			rect.left = 333;
+			rect.top = 828;
+			rect.right = rect.left + 42;
+			rect.bottom = rect.top + 68;
+
+			break;
+		case 6:
+			rect.left = 387;
+			rect.top = 815;
+			rect.right = rect.left + 41;
+			rect.bottom = rect.top + 83;
+
+		case 7:
+			rect.left = 447;
+			rect.top = 806;
+			rect.right = rect.left + 35;
+			rect.bottom = rect.top + 96;
+			break;
+		case 8:
+			rect.left = 501;
+			rect.top = 806;
+			rect.right = rect.left + 38;
+			rect.bottom = rect.top + 98;
+			break;
+		case 9:
+			rect.left = 563;
+			rect.top = 811;
+			rect.right = rect.left + 37;
+			rect.bottom = rect.top + 96;
+			break;
+		/*case 10:
+			rect.left = 11;
+			rect.top = 899;
+			rect.right = rect.left + 59;
+			rect.bottom = rect.top + 87;
+			break;*/
+		/*case 11:
+			rect.left = 83;
+			rect.top = 910;
+			rect.right = rect.left + 61;
+			rect.bottom = rect.top + 68;
+			break;
+		case 12:
+			rect.left = 142;
+			rect.top = 941;
+			rect.right = rect.left + 74;
+			rect.bottom = rect.top + 39;
+			break;
+		case 13:
+			rect.left = 212;
+			rect.top = 944;
+			rect.right = rect.left + 69;
+			rect.bottom = rect.top + 35;
+			break;
+		case 14:
+			rect.left = 287;
+			rect.top = 947;
+			rect.right = rect.left + 72;
+			rect.bottom = rect.top + 34;
+			break;
+		case 15:
+			rect.left = 364;
+			rect.top = 947;
+			rect.right = rect.left + 80;
+			rect.bottom = rect.top + 36;
+			break;
+		case 16:
+			rect.left = 452;
+			rect.top = 932;
+			rect.right = rect.left + 87;
+			rect.bottom = rect.top + 51;
+			break;
+		case 17:
+			rect.left = 550;
+			rect.top = 927;
+			rect.right = rect.left + 88;
+			rect.bottom = rect.top + 57;
+			break;
+		case 18:
+			rect.left = 645;
+			rect.top = 924;
+			rect.right = rect.left + 95;
+			rect.bottom = rect.top + 62;
+			break;
+		case 19:
+			rect.left = 747;
+			rect.top = 924;
+			rect.right = rect.left + 99;
+			rect.bottom = rect.top + 62;
+			break;
+		case 20:
+			rect.left = 852;
+			rect.top = 924;
+			rect.right = rect.left +106;
+			rect.bottom = rect.top + 62;
+			break;*/
+
 		}
 		listSourceRect.push_back(rect);
 	}
 
-	this->mSprite = new SPRITE(filePath, D3DCOLOR_XRGB(255, 0, 255), listSourceRect);
+	this->mSprite = new SPRITE(filePath, D3DCOLOR_XRGB(255,0, 255), listSourceRect);
+
 }
 
 void AladdinDrop::SetUpCurrentFrame()

@@ -81,6 +81,12 @@
     <ClCompile Include="AladdinJump.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="AladdinSitFight.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AladdinAfterDrop.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GLOBAL.h">
@@ -129,6 +135,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AladdinJump.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AladdinSitFight.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AladdinAfterDrop.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -46,12 +46,11 @@ public:
 	static	void							SetUpCurrentFrame() { mCurrentFrame = (mCurrentFrame >= COUNT_FRAME) ? 1 : ++mCurrentFrame; }
 
 	static enum								DIRECTION { UP, DOWN, LEFT, RIGHT , NONE};
-	static enum								STATE { WALK, CLIMB, SWING , DROP,STAND,SIT,FIGHT,JUMP};
+	static enum								STATE { WALK, CLIMB, SWING , DROP,STAND,SIT,FIGHT,JUMP,SITFIGHT, AFTERDROP};
 	static void								SetState(STATE s) { mCurrentState = s; };
 	static STATE							GetState() { return mCurrentState; };
 
-	static void								SetCurDirect(boolean s) { mCurrDirect = s; };
-	static bool								GetCurDirect() { return mCurrDirect; };
+
 
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -68,7 +67,6 @@ private:
 	static	int								mFrameRate; // 1 giây / 20 hình.
 	static	int								mCurrentFrame;
 	static	STATE							mCurrentState;
-	static bool								mCurrDirect;
 };
 
 #endif __GLOBAL_H__

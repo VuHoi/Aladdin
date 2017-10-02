@@ -151,11 +151,13 @@
   <ItemGroup>
     <ClCompile Include="ALADDIN.cpp" />
     <ClCompile Include="AladdinAction.cpp" />
+    <ClCompile Include="AladdinAfterDrop.cpp" />
     <ClCompile Include="AladdinClimb.cpp" />
     <ClCompile Include="AladdinDrop.cpp" />
     <ClCompile Include="AladdinFight.cpp" />
     <ClCompile Include="AladdinJump.cpp" />
     <ClCompile Include="AladdinSit.cpp" />
+    <ClCompile Include="AladdinSitFight.cpp" />
     <ClCompile Include="AladdinStand.cpp" />
     <ClCompile Include="AladdinSwing.cpp" />
     <ClCompile Include="AladdinWalk.cpp" />
@@ -169,11 +171,13 @@
   <ItemGroup>
     <ClInclude Include="ALADDIN.h" />
     <ClInclude Include="AladdinAction.h" />
+    <ClInclude Include="AladdinAfterDrop.h" />
     <ClInclude Include="AladdinClimb.h" />
     <ClInclude Include="AladdinDrop.h" />
     <ClInclude Include="AladdinFight.h" />
     <ClInclude Include="AladdinJump.h" />
     <ClInclude Include="AladdinSit.h" />
+    <ClInclude Include="AladdinSitFight.h" />
     <ClInclude Include="AladdinStand.h" />
     <ClInclude Include="AladdinSwing.h" />
     <ClInclude Include="AladdinWalk.h" />

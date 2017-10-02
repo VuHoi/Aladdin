@@ -23,7 +23,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine,
 	DWORD delta;
 	while (done)
 	{
-		DWORD tick_per_frame = 1100 / GLOBAL::GetFrameRate(); // số giây cần để vẽ.
+		DWORD tick_per_frame = 1000 / GLOBAL::GetFrameRate(); // số giây cần để vẽ.
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) 
 		{
 			if (msg.message == WM_QUIT)
